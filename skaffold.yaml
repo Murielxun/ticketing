@@ -4,16 +4,17 @@ deploy:
   kubectl:
     manifests:
       - ./infra/k8s/*
+      - ./infra/k8s-dev/*
 build:
-  # local:
-  #   push: false
-  googleCloudBuild:
-    projectId: ticketing-dev-353214
+  local:
+    push: false
+  # googleCloudBuild:
+  #   projectId: ticketing-dev-353214
   # used to resolve build not found error
   tagPolicy:
     sha256: {}
   artifacts:
-    - image: us.gcr.io/ticketing-dev-353214/auth
+    - image: murielxun/auth
       context: auth
       docker:
         dockerfile: Dockerfile
@@ -21,7 +22,7 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: us.gcr.io/ticketing-dev-353214/client
+    - image: murielxun/client
       context: client
       docker:
         dockerfile: Dockerfile
@@ -29,7 +30,7 @@ build:
         manual:
           - src: '**/*.ts'
             dest: .
-    - image: us.gcr.io/ticketing-dev-353214/tickets
+    - image: murielxun/tickets
       context: tickets
       docker:
         dockerfile: Dockerfile
@@ -37,7 +38,7 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: us.gcr.io/ticketing-dev-353214/orders
+    - image: murielxun/orders
       context: orders
       docker:
         dockerfile: Dockerfile
@@ -45,7 +46,7 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: us.gcr.io/ticketing-dev-353214/expiration
+    - image: murielxun/expiration
       context: expiration
       docker:
         dockerfile: Dockerfile
@@ -53,7 +54,7 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: us.gcr.io/ticketing-dev-353214/payments
+    - image: murielxun/payments
       context: payments
       docker:
         dockerfile: Dockerfile
@@ -61,60 +62,3 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-
-
-
-# apiVersion: skaffold/v2beta4
-# kind: Config
-# build:
-#   tagPolicy:
-#     sha256: {}
-#   artifacts:
-#     - image: us.gcr.io/ticketing-dev-353214/auth
-#       context: auth
-#       sync:
-#         infer:
-#           - 'src/**/*.ts'
-#         # manual:
-#         #   - src: "src/**/*.ts"
-#         #     dest: .
-#     - image: us.gcr.io/ticketing-dev-353214/client
-#       context: client
-#       sync:
-#         infer:
-#           - 'src/**/*.js'
-#         # manual:
-#         #   - src: "src/**/*.ts"
-#         #     dest: .
- 
-# # Deployment
-# deploy:
-#   kubectl:
-#     manifests:
-#       - ./infra/k8s/*
- 
-# # Deployment setting
-# profiles:
-#   - name: cloudbuild
-#     build:
-#       googleCloudBuild: { projectId: ticketing-dev-353214}
-#       artifacts:
-#         - image: us.gcr.io/ticketing-dev-353214/auth
-#           context: auth
-#           docker:
-#             dockerfile: Dockerfile
-#           sync:
-#             infer:
-#               - 'src/**/*.ts'
-#             # manual:
-#             #   - src: "src/**/*.ts"
-#             #     dest: .
-#         - image: us.gcr.io/ticketing-dev-353214/client           
-#           context: client
-#           docker:
-#             dockerfile: Dockerfile
-#           sync:
-#             infer:
-#               - '**/*.js'
-
-    
