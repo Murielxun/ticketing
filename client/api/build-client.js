@@ -8,7 +8,7 @@ export default ({ req }) => {
     // also need to specify the domain (host)
     return axios.create({
       baseURL:
-        'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local',
+        'http://www.murielxun-ticketing-app-prod.xyz/',
       headers: req.headers,
     });
   } else {
